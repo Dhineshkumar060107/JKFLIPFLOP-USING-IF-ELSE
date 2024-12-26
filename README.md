@@ -46,18 +46,43 @@ RegisterNumber:24900785
 
 **PROGRAM**
 ```
-module exp7(J,K,clk,q,qbar);
-input J,K,clk;
-output reg q;
-output reg qbar;
-initial q=0;
-initial qbar=1;
-always @(posedge clk)
-begin
-q=((J&(~q))|((~K)&q));
-qbar=~q;
-end
-endmodule
+module jkff(j, k, clk, rst, q, qbar); 
+    input j; 
+    input k; 
+    input clk; 
+    input rst; 
+    output q; 
+    output qbar; 
+  reg q; 
+  reg qbar; 
+  always @ (posedge(clk) or posedge(rst))  begin 
+  if (rst==1'b1) 
+  begin 
+  q=1'b0; 
+  qbar=1'b1; 
+  end
+else if (j==1'b0 && k==1'b0) 
+  begin 
+  q=q; 
+  qbar=qbar; 
+  end 
+  else if (j==1'b0 && k==1'b1) 
+  begin 
+  q=1'b0; 
+  qbar=1'b1; 
+  end 
+  else if (j==1'b1 && k==1'b0) 
+  begin 
+  q=1'b1; 
+  qbar=1'b0; 
+  end 
+  else 
+  begin 
+  q=~q; 
+  qbar=~qbar; 
+  end 
+  end  
+  endmodule
 ```
 
 
